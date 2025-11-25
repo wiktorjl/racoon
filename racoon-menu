@@ -1,0 +1,19 @@
+#!/bin/bash
+# Racoon Menu Launcher
+# Run this script via Alt+F2 in KDE to launch the menu system
+
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Change to the racoon directory so menu.py can find the 'menu' folder
+cd "$SCRIPT_DIR"
+
+# Check if we're already in a terminal
+if [ -t 0 ]; then
+    # Already in a terminal, run directly
+    exec python3 "$SCRIPT_DIR/menu.py"
+else
+    # Not in a terminal (launched from Alt+F2), spawn xterm with custom size
+    # xterm -geometry WIDTHxHEIGHT (columns x rows)
+    exec xterm -geometry 80x30 -e python3 "$SCRIPT_DIR/menu.py"
+fi
